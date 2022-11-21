@@ -17,7 +17,7 @@ const reactionSchema = new Schema(
         },
         createdAt:{
             type:Date,
-            default: Date,now,
+            default: Date.now,
             //format getter
         }
     },
@@ -29,5 +29,9 @@ const reactionSchema = new Schema(
     }
 )
 
-const Reaction=model('reaction',reactionSchema);
-module.exports=Reaction;
+// const Reaction=model('reaction',reactionSchema); ??? why?
+// throw new TypeError('Invalid schema configuration: ' +
+// ^
+
+// TypeError: Invalid schema configuration: `model` is not a valid type within the array `reactions`.See https://bit.ly/mongoose-schematypes for a list of valid schema types.
+module.exports=reactionSchema;
