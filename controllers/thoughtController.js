@@ -1,4 +1,4 @@
-const { Reaction } = require('../models');
+const { Reaction, User } = require('../models');
 const Thought = require('../models/Thought');
 
 module.exports = {
@@ -18,7 +18,14 @@ module.exports = {
     },
     createThought(req, res) {
         Thought.create(req.body)
-            .then((dbThoughtData) => res.json(dbThoughtData))
+            .then((dbThoughtData) => 
+             !dbThoughtData
+                ?res.status(404).json({message:'No thought created'})
+                :User.findOneAndUpdate(
+                    { username: req.body.username },
+                    { $addToSet: { thoughts: dbThoughtData._id } },
+                    { new: true }
+            ))
             .catch((err) => res.status(500).json(err));
     },
     updateThought(req, res) {
