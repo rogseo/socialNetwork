@@ -1,6 +1,6 @@
 const { truncateSync } = require('fs');
 const { Schema, model } = require('mongoose');
-const Reaction=require('Reaction');
+const Reaction = require('Reaction');
 
 const thoughtSchema = new Schema({
     thoughtText: {
@@ -29,10 +29,10 @@ const thoughtSchema = new Schema({
 );
 
 thoughtSchema
-.virtual('reactionCount')
-.get(function(){
-    return this.reactions.length;
-})
+    .virtual('reactionCount')
+    .get(function () {
+        return this.reactions.length;
+    });
 
 const Thought = model('thought', thoughtSchema);
-module.exports=Thought;
+module.exports = Thought;
