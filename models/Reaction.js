@@ -1,5 +1,6 @@
 const {Schema, model, Types}=require('mongoose');
 
+
 const reactionSchema = new Schema(
     {
         reactionId:{
@@ -18,8 +19,13 @@ const reactionSchema = new Schema(
         createdAt:{
             type:Date,
             default: Date.now,
-            //format getter
-        }
+            // get: function(){
+            //     this.createdAt.toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+            // },
+            // set:function(v){
+            //     v.createdAt.toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+            // },
+        },
     },
     {
         toJSON: {
@@ -29,9 +35,12 @@ const reactionSchema = new Schema(
     }
 )
 
-// const Reaction=model('reaction',reactionSchema); ??? why?
-// throw new TypeError('Invalid schema configuration: ' +
-// ^
+reactionSchema
+  .virtual('formatDate')
+  // Getter
+  .get(function () {
+    return this.createdAt.toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+  });
 
-// TypeError: Invalid schema configuration: `model` is not a valid type within the array `reactions`.See https://bit.ly/mongoose-schematypes for a list of valid schema types.
+
 module.exports=reactionSchema;

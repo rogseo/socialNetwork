@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const Thought =require('../models/Thought');
+const Thought = require('../models/Thought');
 
 module.exports = {
     getUsers(req, res) {
@@ -9,6 +9,7 @@ module.exports = {
     },
     getSingleUser(req, res) {
         User.findOne({ _id: req.params.userId })
+        .populate('thoughts')
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: 'No user with that ID' })
@@ -31,6 +32,12 @@ module.exports = {
                 !user
                     ? res.status(404).json({ message: 'No user with this id!' })
                     : res.json(user)
+                    // : Thought.findOneAndUpdate(
+                    //     { username: user.username },
+                    //     { $set: { username: req.body.username,
+                    //     reactions } },
+                    //     { runValidators: true, new: true }
+                    // )
             )
             .catch((err) => {
                 console.log(err);
@@ -39,14 +46,17 @@ module.exports = {
     },
     deleteUser(req, res) {
         User.findOneAndDelete({ _id: req.params.userId })
-          .then((user) =>
-            !user
-              ? res.status(404).json({ message: 'No user with that ID' })
-              : Thought.deleteMany({ _id: { $in: user.friends } })
-          )
-          .then(() => res.json({ message: 'User and friends deleted!' }))
-          .catch((err) => res.status(500).json(err));
-      },
+            .then((user) =>
+                !user
+                    ? res.status(404).json({ message: 'No user with that ID' })
+                    : Thought.deleteMany({ _id: { $in: user.thoughts } })
+            )
+            .then((thought) =>
+                !thought
+                    ? res.status(404).json({ message: 'No thought with that ID' })
+                    : res.json({ message: 'User and thought deleted!' }))
+            .catch((err) => res.status(500).json(err));
+    },
     addFriend(req, res) {
         User.findOneAndUpdate(
             { _id: req.params.userId },
