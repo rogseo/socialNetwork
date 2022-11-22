@@ -110,7 +110,7 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
 
 
 ## Demonstration
-[ViewDemoVideo](https://watch.screencastify.com/v/Cr3hHx2Q5x5ykmhKmfgU)
+[ViewDemoVideo](https://watch.screencastify.com/v/0qKdUVK707cYUYllqccY)
 
 
 ## Questions
