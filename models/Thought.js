@@ -11,6 +11,7 @@ const thoughtSchema = new Schema({
     },
     createAt: {
         type: Date,
+        // get : v=>`${v.toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric",hour:"numeric"})}`,
         default: Date.now,
     },
     username: {
@@ -33,6 +34,17 @@ thoughtSchema
     .get(function () {
         return this.reactions.length;
     });
+thoughtSchema
+    .path('createAt')
+    .get(function(v){
+    return `${v.toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric",hour:"numeric"})}`;
+});
+// thoughtSchema
+//   .virtual('createdAt')
+//   // Getter
+//   .get(function () {
+//     return this.createAt.toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric",hour:"numeric"});
+//   });
 
 const Thought = model('thought', thoughtSchema);
 module.exports = Thought;

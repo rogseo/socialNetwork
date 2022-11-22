@@ -32,12 +32,6 @@ module.exports = {
                 !user
                     ? res.status(404).json({ message: 'No user with this id!' })
                     : res.json(user)
-                    // : Thought.findOneAndUpdate(
-                    //     { username: user.username },
-                    //     { $set: { username: req.body.username,
-                    //     reactions } },
-                    //     { runValidators: true, new: true }
-                    // )
             )
             .catch((err) => {
                 console.log(err);

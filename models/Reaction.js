@@ -36,10 +36,10 @@ const reactionSchema = new Schema(
 )
 
 reactionSchema
-  .virtual('formatDate')
+  .virtual('createAt')
   // Getter
   .get(function () {
-    return this.createdAt.toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+    return this.createdAt.toLocaleDateString('en-us', { weekday: "long", year: "numeric", month: "short", day: "numeric",hour:"numeric"});
   });
 
 
